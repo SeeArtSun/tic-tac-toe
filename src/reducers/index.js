@@ -1,3 +1,6 @@
+/*
+ *  Reducer
+ */
 import {ADD_SYMBOL, JUMP_TO_HISTORY} from '../actions';
 
 const initialState = {
@@ -34,12 +37,15 @@ const reducer = (state = initialState, action) => {
         winner: calculateWinner(squares),
       };
     case JUMP_TO_HISTORY:
-      state.history = state.history.slice(0, action.index+1);
+      const stepNumber = action.index;
+      const xIsNext = stepNumber%2 === 0 ? true : false;
+      history = state.history.slice(0, stepNumber+1);
+      winner  = calculateWinner(state.history[stepNumber]);
       return {
-        history: state.history.slice(0, action.index+1),
-        stepNumber: action.index,
-        xIsNext: action.index%2 === 0 ? true : false,
-        winner: calculateWinner(state.history[action.index]),
+        history: history,
+        stepNumber: stepNumber,
+        xIsNext: xIsNext,
+        winner: winner,
       };
     default:
       return state;

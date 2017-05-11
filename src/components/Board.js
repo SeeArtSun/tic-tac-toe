@@ -7,15 +7,6 @@ const O = "O";
 const X = "X";
 
 class Board extends React.Component {
-  /* Remove for using props
-  constructor() {
-    super();
-    this.state = {
-      squares: Array(9).fill(null),
-      xIsNext: true,
-    };
-  }
-  */
   renderSquare(i) {
     return (
       <Square

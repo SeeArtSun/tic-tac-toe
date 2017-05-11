@@ -1,3 +1,6 @@
+/*
+ *  Store
+ */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
@@ -6,9 +9,6 @@ import reducer from './reducers/index';
 import App from './components/App';
 import './index.css';
 
-/*
- *  Store
- */
 const store = createStore(reducer);
 const appElement = document.getElementById('app');
 
