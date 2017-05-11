@@ -10,11 +10,6 @@ export const addSymbol = (index) => ({
   index
 });
 
-export const calculateWinner = (squares) => ({
-  type: CALCULATE_WINNER,
-  squares
-});
-
 export const jumpToHistory = (history) => ({
   type: JUMP_TO_HISTORY,
   history

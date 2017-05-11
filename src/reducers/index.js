@@ -6,6 +6,7 @@ const initialState = {
   }],
   stepNumber: 0,
   xIsNext: true,
+  winner: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -14,6 +15,7 @@ const reducer = (state = initialState, action) => {
       const history = state.history.slice(0, state.stepNumber + 1);
       const current = history[history.length - 1];
       const squares = current.squares.slice();
+      let status;
 
       // for ignore the click
       // case1: already won the game / case2: already clicked
@@ -22,13 +24,15 @@ const reducer = (state = initialState, action) => {
       }
 
       squares[action.index] = state.xIsNext ? 'X' : 'O';
+      const winner = calculateWinner(squares);
 
       return {
         history: history.concat([{
           squares: squares
         }]),
         stepNumber: history.length,
-        xIsNext: !state.xIsNext
+        xIsNext: !state.xIsNext,
+        winner: winner,
       };
     case JUMP_TO_HISTORY:
       return state;

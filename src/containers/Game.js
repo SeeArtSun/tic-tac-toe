@@ -7,6 +7,7 @@ const mapStateToProps = (state) => ({
   history: state.history,
   stepNumber: state.stepNumber,
   xIsNext: state.xIsNext,
+  winner: state.winner,
 });
 
 const mapDispatchToProps = (dispatch) => ({
