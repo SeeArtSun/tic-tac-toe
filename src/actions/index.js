@@ -10,7 +10,7 @@ export const addSymbol = (index) => ({
   index
 });
 
-export const jumpToHistory = (history) => ({
+export const jumpToHistory = (index) => ({
   type: JUMP_TO_HISTORY,
-  history
+  index
 });

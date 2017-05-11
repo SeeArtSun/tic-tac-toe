@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { addSymbol } from '../actions';
+import { addSymbol, jumpToHistory } from '../actions';
 import Game from '../components/Game';
 
 const mapStateToProps = (state) => ({
@@ -13,17 +13,10 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   addSymbol(index) {
     dispatch(addSymbol(index));
+  },
+  jumpToHistory(index) {
+    dispatch(jumpToHistory(index));
   }
-  // ,
-  // jumpTo()
 });
-
-
-  // jumpTo(step) {
-  //   this.setState({
-  //     stepNumber: step,
-  //     xIsNext: (step % 2) ? false : true,
-  //   });
-  // }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
