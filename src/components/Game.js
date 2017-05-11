@@ -29,7 +29,7 @@ class Game extends React.Component {
         'Game start';
         return (
           <li key={move}>
-            {desc}
+            <a href="javascript:void(0)">{desc}</a>
           </li>
         );
     });
