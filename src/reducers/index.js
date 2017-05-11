@@ -17,10 +17,10 @@ const reducer = (state = initialState, action) => {
 
       // for ignore the click
       // case1: already won the game / case2: already clicked
-      if(calculateWinner(squares) || squares[action.index]) {
-        return;
+      if(squares[action.index]) {
+       return state;
       }
-      
+
       squares[action.index] = state.xIsNext ? 'X' : 'O';
 
       return {
