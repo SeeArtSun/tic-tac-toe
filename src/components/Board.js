@@ -1,10 +1,6 @@
-import React, { Component } from 'react';
-import { addSymbol, startAgain } from '../actions/index';
-import { connect } from 'react-redux';
+import React from 'react';
 import Square from './Square';
 import './App.css';
-const O = "O";
-const X = "X";
 
 class Board extends React.Component {
   renderSquare(i) {

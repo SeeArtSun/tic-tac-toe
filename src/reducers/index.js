@@ -15,10 +15,10 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch(action.type) {
     case ADD_SYMBOL:
-      const history = state.history.slice(0, state.stepNumber + 1);
-      const current = history[history.length - 1];
-      const squares = current.squares.slice();
-      const winner = state.winner;
+      let history = state.history.slice(0, state.stepNumber + 1);
+      let current = history[history.length - 1];
+      let squares = current.squares.slice();
+      let winner = state.winner;
 
       // for ignore the click
       // case1: already won the game / case2: already clicked
@@ -37,8 +37,8 @@ const reducer = (state = initialState, action) => {
         winner: calculateWinner(squares),
       };
     case JUMP_TO_HISTORY:
-      const stepNumber = action.index;
-      const xIsNext = stepNumber%2 === 0 ? true : false;
+      let stepNumber = action.index;
+      let xIsNext = stepNumber%2 === 0 ? true : false;
       history = state.history.slice(0, stepNumber+1);
       winner  = calculateWinner(state.history[stepNumber]);
       return {

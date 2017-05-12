@@ -1,14 +1,7 @@
-import React, { Component } from 'react';
-import { addSymbol, startAgain } from '../actions/index';
-import { connect } from 'react-redux';
-import Square from './Square';
+import React from 'react';
 import Board from './Board';
 
 class Game extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const history = this.props.history;
     const current = history[this.props.stepNumber];
