@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-
 import { addSymbol, jumpToHistory } from '../actions';
 import Game from '../components/Game';
 
