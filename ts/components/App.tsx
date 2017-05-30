@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import Game from '../containers/Game';
 
 const App = () => {
