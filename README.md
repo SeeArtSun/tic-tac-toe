@@ -115,12 +115,36 @@ Flux 패턴에서 `Store`는 어플리케이션의 모든 데이터 변화를 �
 
 ## React with Redux?
 
-이제 [`React Tic-Tac-Toe Tutorial`](https://facebook.github.io/react/tutorial/tutorial.html)에 `Redux`를 입혀봅시다.
-[`최종결과를 확인하고 코드를 fork하세요.`](https://codepen.io/gaearon/pen/gWWZgR?editors=0010)
+이제 [`React Tic-Tac-Toe Tutorial`](https://facebook.github.io/react/tutorial/tutorial.html)에 `Redux`를 입혀보곘습니다.
+[`최종결과를 확인하고 코드를 fork 해보세요.`](https://codepen.io/gaearon/pen/gWWZgR?editors=0010)
 
 ### Step1. React Component 분리
 Tutorial 최종 결과에서 중요한 코드는 [`index.js`](https://gist.github.com/SeeArtSun/261f398b3b9eb430e450ff8dc9fe2a96) 뿐입니다.
-하지만 이 파일에는 Tic-Tac-Toe 놀이판의 한 칸 한 칸에 해당하는 `Square Component`, 놀이판에 해당하는 `Board Component`, 전체 게임을 관리하는 `Game Component` 가 모두 담겨있습니다.
+하지만 이 파일에는 Tic-Tac-Toe 놀이판의 한 칸 한 칸에 해당하는 `Square Component`, 놀이판에 해당하는 `Board Compoent`, 전체 게임을 관리하는 `Game Component` 가 모두 담겨있습니다.
 해서 이 Component들을 각각의 파일로 분리하겠습니다.
 
 https://gist.github.com/SeeArtSun/c2ed113c622a6c6161ead0e76cac2409
+
+### Step2. Redux 설치
+
+프로젝트 디렉토리 안에서 `redux`와 `react-redux`를 설치하고 package.json에 추가합니다.
+`react-redux`는 redux를 컴포넌트 상에서 더 간편하게 사용 할 수 있게 해 주는 라이브러리입니다. react-redux를 사용하면 컴포넌트에서 store를 props으로 받아오거나, subscribe를 직접 하지 않아도 됩니다. 
+```
+$ npm install --save redux react-redux
+```
+
+### Step3. Action 정의
+
+`action` 코드를 쓸 디렉토리를 만들고, 파일을 생성합니다.
+```
+$ mkdir -p src/actions & touch src/actions/
+index.js
+```
+
+`Action`에서 상태변화가 있을 법한 상황들을 미리 정의한다고 했습니다.
+[Tic-Tac-Toe 튜토리얼](https://codepen.io/gaearon/pen/gWWZgR?editors=0010) 게임을 직접 해보면, `1) Player가 수를 두는 행위`와 `2) History로 이동하는 행위` 정도가 있을 것 같습니다.
+
+저는 Player가 수를 두는 행위는 `ADD_SYMBOL`, History로 이동하는 행위는 `JUMP_TO_HISTORY`라고 부르려고 합니다.
+
+- /src/actions/index.js
+
