@@ -118,6 +118,16 @@ Flux 패턴에서 `Store`는 어플리케이션의 모든 데이터 변화를 �
 이제 [`React Tic-Tac-Toe Tutorial`](https://facebook.github.io/react/tutorial/tutorial.html)에 `Redux`를 입혀보곘습니다.
 [`최종결과를 확인하고 코드를 fork 해보세요.`](https://codepen.io/gaearon/pen/gWWZgR?editors=0010)
 
+제 repository를 clone하셔도 좋습니다.
+```
+$ git@github.com:SeeArtSun/react-tic-tac-toe.git
+```
+
+실행해보세요.
+```
+$ npm start
+```
+
 ### Step1. React Component 분리
 Tutorial 최종 결과에서 중요한 코드는 [`index.js`](https://gist.github.com/SeeArtSun/261f398b3b9eb430e450ff8dc9fe2a96) 뿐입니다.
 하지만 이 파일에는 Tic-Tac-Toe 놀이판의 한 칸 한 칸에 해당하는 `Square Component`, 놀이판에 해당하는 `Board Compoent`, 전체 게임을 관리하는 `Game Component` 가 모두 담겨있습니다.
@@ -128,7 +138,7 @@ https://gist.github.com/SeeArtSun/c2ed113c622a6c6161ead0e76cac2409
 ### Step2. Redux 설치
 
 프로젝트 디렉토리 안에서 `redux`와 `react-redux`를 설치하고 package.json에 추가합니다.
-`react-redux`는 redux를 컴포넌트 상에서 더 간편하게 사용 할 수 있게 해 주는 라이브러리입니다. react-redux를 사용하면 컴포넌트에서 store를 props으로 받아오거나, subscribe를 직접 하지 않아도 됩니다. 
+`react-redux`는 redux를 컴포넌트 상에서 더 간편하게 사용 할 수 있게 해 주는 라이브러리입니다. react-redux를 사용하면 컴포넌트에서 store를 props으로 받아오거나, subscribe를 직접 하지 않아도 됩니다.
 ```
 $ npm install --save redux react-redux
 ```
@@ -147,4 +157,49 @@ index.js
 저는 Player가 수를 두는 행위는 `ADD_SYMBOL`, History로 이동하는 행위는 `JUMP_TO_HISTORY`라고 부르려고 합니다.
 
 - /src/actions/index.js
+https://gist.github.com/SeeArtSun/54a329e3fbe846ece353afedffde9ee0
 
+각각의 Action은 `type`을 필수로 가져야합니다. 후에 `type`은 실제 logic을 담고있는 `Reducer`에서 `Action`명을 구분할 때 사용됩니다.
+
+argument로는 index(number)를 받습니다.
+tic-tac-toe에서 board는 배열이고, history 또한 board의 배열로 구현했기 때문에 어떤 위치에 수를 두고, 어느 history로 돌아갈지 배열의 index로 구분합니다.
+
+이 상태로 실행하더라도 아직 `Store`와 `Component`를 연결하지 않았기 때문에 결과는 변하지 않습니다.
+
+### Step4. Reducer 구현 및 Store 연결
+
+`reducer` 코드를 쓸 디렉토리를 만들고, 파일을 생성합니다.
+```
+$ mkdir -p src/reducers & touch src/reducers/Game.js
+```
+
+이 후 부터는 Reducer에 logic을 구현하고, Component에 있던 logic을 뺄겁니다.
+최종적으로는 Component에는 View를 그리는 코드만 남기겠습니다.
+
+#### Step4-1. Reducer 구조 만들기
+
+Reducer는 세 부분으로 이루어져 있습니다.
+- import action
+- initialState 정의
+- reducer 구현
+
+코드를 보실까요?
+
+https://gist.github.com/SeeArtSun/a7e12cdb5b716cafd3899badf860f047
+
+정의해 두었던 `Action`들인 `ADD_SYMBOL`과 `JUMP_RO_HISTORY`를 impot 했습니다.
+
+React는 Component state의 변화에 따라 동작합니다. 따라서 state를 정의해주었고요, 들어오는 Action에 따라 logic이 동작할 수 있도록 reducer를 선언해 주었습니다.
+아직 reducer에는 구현된 로직이 없습니다.
+
+#### Step4-2. ADD_SYMBOL(수 두기) 구현
+
+한 번에 모든 Action을 구현하기는 어렵겠죠. 해서 `O`, `X`로 수 두기에 해당하는 `ADD_SYMBOL`를 먼저 구현하겠습니다.
+
+`ADD_SYMBOL`에 어떤 내용들을 채워넣을 지, `/components/Game.js`를 볼까요?
+
+`reducers/Game.js`에 `initialState`로 state 구조를 만들어 두었고 reducer에서 state를 return하여 component에서는 props로 받을거기 때문에 `constructor()`는 삭제해도 좋겠습니다.
+
+`ADD_SYMBOL` 내부를 구현하면 되니 `handleClick()`도 삭제하겠습니다. 대신, handleClick의 내용이 ADD_SYMBOL의 내용이 되므로 그대로 복사해서 logic에 맞게 조금씩 수정해주세요.
+
+https://gist.github.com/SeeArtSun/a7e12cdb5b716cafd3899badf860f047#file-game-step2-js
