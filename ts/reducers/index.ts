@@ -3,7 +3,14 @@
  */
 import {ADD_SYMBOL, JUMP_TO_HISTORY} from '../actions';
 
-const initialState = {
+interface IState {
+  history: { squares: string[] }[];
+  stepNumber: number;
+  winner: string;
+  xIsNext: boolean;
+}
+
+const initialState: IState = {
   history: [{
     squares: Array(9).fill(null),
   }],
@@ -12,7 +19,7 @@ const initialState = {
   winner: null,
 };
 
-const reducer = (state = initialState, action) => {
+const reducer = (state: IState = initialState, action: any) => {
   switch(action.type) {
     case ADD_SYMBOL:
       let history = state.history.slice(0, state.stepNumber + 1);
@@ -51,7 +58,7 @@ const reducer = (state = initialState, action) => {
   }
 }
 
-function calculateWinner(squares) {
+function calculateWinner(squares: string[]): string {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
