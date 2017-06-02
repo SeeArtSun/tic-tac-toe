@@ -1,7 +1,16 @@
 import * as React from 'react';
 import Board from './Board';
 
-class Game extends React.Component {
+interface IProps {
+  history: { squares: string[] }[];
+  stepNumber: number;
+  winner: string;
+  xIsNext: boolean;
+  jumpToHistory: (move: number) => void;
+  addSymbol: () => void;
+}
+
+class Game extends React.Component<IProps, undefined> {
   render() {
     const history = this.props.history;
     const current = history[this.props.stepNumber];
