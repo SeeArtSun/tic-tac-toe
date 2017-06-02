@@ -46,7 +46,7 @@ const reducer = (state: IState = initialState, action: any) => {
     case JUMP_TO_HISTORY:
       let stepNumber = action.index;
       let xIsNext = stepNumber%2 === 0 ? true : false;
-      winner  = calculateWinner(state.history[stepNumber]);
+      winner = calculateWinner(state.history[stepNumber].squares);
       return {
         history: state.history,
         stepNumber: stepNumber,
