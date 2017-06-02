@@ -2,18 +2,25 @@ import { connect } from 'react-redux';
 import { addSymbol, jumpToHistory } from '../actions';
 import Game from '../components/Game';
 
-const mapStateToProps = (state) => ({
+interface IState {
+  history: { squares: string[] }[];
+  stepNumber: number;
+  winner: string;
+  xIsNext: boolean;
+}
+
+const mapStateToProps = (state: IState) => ({
   history: state.history,
   stepNumber: state.stepNumber,
   xIsNext: state.xIsNext,
   winner: state.winner,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  addSymbol(index) {
+const mapDispatchToProps = (dispatch: any) => ({
+  addSymbol(index: number) {
     dispatch(addSymbol(index));
   },
-  jumpToHistory(index) {
+  jumpToHistory(index: number) {
     dispatch(jumpToHistory(index));
   }
 });
