@@ -198,8 +198,34 @@ React는 Component state의 변화에 따라 동작합니다. 따라서 state를
 
 `ADD_SYMBOL`에 어떤 내용들을 채워넣을 지, `/components/Game.js`를 볼까요?
 
-`reducers/Game.js`에 `initialState`로 state 구조를 만들어 두었고 reducer에서 state를 return하여 component에서는 props로 받을거기 때문에 `constructor()`는 삭제해도 좋겠습니다.
+##### /src/components/Game.js 에서
+- `reducers/Game.js`에 `initialState`로 state 구조를 만들어 두었고 reducer에서 state를 return하여 component에서는 props로 받을거기 때문에 `constructor()`는 삭제해도 좋겠습니다.
 
-`ADD_SYMBOL` 내부를 구현하면 되니 `handleClick()`도 삭제하겠습니다. 대신, handleClick의 내용이 ADD_SYMBOL의 내용이 되므로 그대로 복사해서 logic에 맞게 조금씩 수정해주세요.
+- react component에서 쓰던 state는 reducer dispatcher를 통해 props로 mapping 할 예정입니다. 위와 동일한 이야기입니다. 때문에 `components/Game.js`에 `state`는 모두 `props`로 바꾸겠습니다.
+
+- `ADD_SYMBOL` 내부를 구현하면 되니 `handleClick()`도 삭제하겠습니다. 대신 이 로직 그대로 ADD_SYMBOL을 구현할테니, 잘 보관해두세요.
+
+- 그리고 아래 코드에서 수 두기에 해당했던 `onClick={(i) => this.handleClick(i)`은 삭제했으니 다른 코드로 대체하겠습니다.
+저는 후에 props로 `addSymbol`이라는 메소드로 받아올 생각입니다. 그래서 `onClick={this.props.addSymbol}`로 바꿔놓겠습니다.
+```
+return (
+      <div className="game">
+        <div className="game-board">
+          <Board
+            squares={current.squares}
+
+            // onClick={this.props.addSymbol} 로 바꿔주세요.
+            onClick={(i) => this.handleClick(i)}
+          />
+        </div>
+        <div className="game-info">
+          <div>{status}</div>
+          <ol>{moves}</ol>
+        </div>
+      </div>
+    );
+```
+- winner 결정도 reducer에서 하려고 합니다. 해서, `calculateWinner()`도 삭제하고, `reducer`에 붙이겠습니다.
+
 
 https://gist.github.com/SeeArtSun/a7e12cdb5b716cafd3899badf860f047#file-game-step2-js
