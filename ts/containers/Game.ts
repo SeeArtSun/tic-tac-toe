@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { addSymbol, jumpToHistory } from '../actions';
-import Game from '../components/Game';
+import Game from '../game/Game';
 
 interface IState {
   history: { squares: string[] }[];
