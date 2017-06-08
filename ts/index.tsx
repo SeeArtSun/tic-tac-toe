@@ -8,7 +8,11 @@ import Game from './containers/Game';
 import GameStore from './game/GameStore';
 import App from './game/App';
 
-const stores = {
+interface IStores {
+  gameStore: GameStore,
+}
+
+const stores: IStores = {
   gameStore: new GameStore(),
 }
 
@@ -20,3 +24,5 @@ ReactDOM.render(
   </Provider>,
   appElement
 );
+
+export { IStores }

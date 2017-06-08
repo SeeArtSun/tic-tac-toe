@@ -1,5 +1,10 @@
+import { inject, observer } from 'mobx-react';
 import * as React from 'react';
+import { Component } from 'react';
 import Board from './Board';
+import GameStore from './GameStore';
+import { IStores } from '../index';
+
 
 interface IProps {
   history: { squares: string[] }[];
@@ -10,11 +15,23 @@ interface IProps {
   addSymbol: () => void;
 }
 
-class Game extends React.Component<IProps, undefined> {
+interface IInjects {
+  gameStore?: GameStore;
+}
+
+@inject((stores: IStores): IInjects => ({
+  gameStore: stores.gameStore,
+}))
+@observer
+class Game extends Component<IInjects, undefined> {
+  constructor(props: any) {
+    super(props);
+  }
   render() {
-    const history = this.props.history;
-    const current = history[this.props.stepNumber];
-    const winner  = this.props.winner;
+    const { gameStore } = this.props;
+    const history = gameStore.currentGame.history;
+    const current = history[gameStore.currentGame.stepNumber];
+    const winner  = gameStore.currentGame.winner;
 
     const moves = history.map((step, move) => {
       const desc = move ?
@@ -22,7 +39,7 @@ class Game extends React.Component<IProps, undefined> {
         'Game start';
         return (
           <li key={move}>
-            <button onClick={() => this.props.jumpToHistory(move)}>{desc}</button>
+            <button onClick={() => gameStore.jumpToHistory(gameStore.currentGame, move)}>{desc}</button>
           </li>
         );
     });
@@ -31,7 +48,7 @@ class Game extends React.Component<IProps, undefined> {
      if(winner) {
        status = 'Winner: ' + winner;
     } else {
-      status = 'Next player: ' + (this.props.xIsNext ? 'X' : 'O');
+      status = 'Next player: ' + (gameStore.currentGame.xIsNext ? 'X' : 'O');
     }
 
     return (
@@ -39,7 +56,7 @@ class Game extends React.Component<IProps, undefined> {
         <div className="game-board">
           <Board
             squares={current.squares}
-            onClick={this.props.addSymbol}
+            onClick={() => gameStore.addSymbol(gameStore.currentGame, event)}
           />
         </div>
         <div className="game-info">
