@@ -1,7 +1,11 @@
-import React from 'react';
-import './App.css';
+import * as React from 'react';
 
-function Square(props) {
+interface IProps {
+  value: string;
+  onClick(): void;
+}
+
+function Square(props: IProps) {
   return (
     <button className="square" onClick={props.onClick}>
       {props.value}
