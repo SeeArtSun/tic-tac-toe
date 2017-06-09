@@ -31,7 +31,7 @@ class Game extends Component<IInjects, undefined> {
         'Game start';
         return (
           <li key={move}>
-            <button onClick={() => gameStore.jumpToHistory(currentGame, move)}>{desc}</button>
+            <button onClick={() => gameStore.jumpToHistory(move)}>{desc}</button>
           </li>
         );
     });
@@ -48,7 +48,7 @@ class Game extends Component<IInjects, undefined> {
         <div className="game-board">
           <Board
             squares={current.squares}
-            onClick={() => gameStore.addSymbol(currentGame, event)}
+            onClick={(index) => gameStore.addSymbol(index)}
           />
         </div>
         <div className="game-info">

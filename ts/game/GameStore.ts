@@ -18,37 +18,40 @@ class GameStore {
   };
 
   @action
-  public addSymbol = (game: IGame, action: any) => {
-    const history = game.history.slice(0, game.stepNumber + 1);
+  public addSymbol = (index: number) => {
+    const { currentGame } = this;
+
+    const history = currentGame.history.slice(0, currentGame.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
-    const winner = game.winner;
+    const winner = currentGame.winner;
 
-    if (winner || squares[action.index]) {
+    if (winner || squares[index]) {
       return;
     }
 
-    squares[action.index] = game.xIsNext ? 'X' : 'O';
+    squares[index] = currentGame.xIsNext ? 'X' : 'O';
 
     this.currentGame.history = history.concat([{ squares: squares }]);
     this.currentGame.stepNumber = history.length;
-    this.currentGame.xIsNext = !game.xIsNext;
+    this.currentGame.xIsNext = !currentGame.xIsNext;
     this.currentGame.winner = this.calculateWinner(squares);
+
   }
 
   @action
-  public jumpToHistory = (game: IGame, action: any) => {
-    const stepNumber = action.index;
+  public jumpToHistory = (index: number) => {
+    const stepNumber = index;
     const xIsNext = stepNumber%2 === 0 ? true : false;
-    const winner = this.calculateWinner(game.history[stepNumber].squares);
+    const winner = this.calculateWinner(this.currentGame.history[stepNumber].squares);
 
-    this.currentGame.history = game.history;
+    this.currentGame.history = this.currentGame.history;
     this.currentGame.stepNumber = stepNumber;
     this.currentGame.xIsNext = xIsNext;
     this.currentGame.winner = winner;
   }
 
-  private calculateWinner(squares: string[]): string {
+  public calculateWinner(squares: string[]): string {
     const lines = [
       [0, 1, 2],
       [3, 4, 5],
