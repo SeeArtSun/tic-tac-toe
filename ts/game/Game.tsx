@@ -9,14 +9,17 @@ interface IInjects {
 }
 
 @inject((stores: IStores): IInjects => ({
-  gameStore: stores.GameStore,
+  gameStore: stores.gameStore,
 }))
 @observer
-class Game extends React.Component<IProps, undefined> {
+class Game extends React.Component<IInjects, undefined> {
   render() {
-    const history = this.props.history;
-    const current = history[this.props.stepNumber];
-    const winner  = this.props.winner;
+    const { gameStore } = this.props;
+    const currentGame = gameStore.currentGame;
+
+    const history = currentGame.history;
+    const current = history[currentGame.stepNumber];
+    const winner  = currentGame.winner;
 
     const moves = history.map((step, move) => {
       const desc = move ?
@@ -24,7 +27,7 @@ class Game extends React.Component<IProps, undefined> {
         'Game start';
         return (
           <li key={move}>
-            <button onClick={() => this.props.jumpToHistory(move)}>{desc}</button>
+            <button onClick={() => gameStore.jumpToHistory(move)}>{desc}</button>
           </li>
         );
     });
@@ -33,7 +36,7 @@ class Game extends React.Component<IProps, undefined> {
      if(winner) {
        status = 'Winner: ' + winner;
     } else {
-      status = 'Next player: ' + (this.props.xIsNext ? 'X' : 'O');
+      status = 'Next player: ' + (currentGame.xIsNext ? 'X' : 'O');
     }
 
     return (
@@ -41,7 +44,7 @@ class Game extends React.Component<IProps, undefined> {
         <div className="game-board">
           <Board
             squares={current.squares}
-            onClick={this.props.addSymbol}
+            onClick={(index) => gameStore.addSymbol(index)}
           />
         </div>
         <div className="game-info">

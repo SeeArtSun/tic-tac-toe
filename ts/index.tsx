@@ -9,13 +9,13 @@ interface IStores {
 }
 
 const stores: IStores = {
-  gameStore: new GameStore();
+  gameStore: new GameStore(),
 }
 
 const appElement = document.getElementById('app');
 
 ReactDOM.render(
-  <Provider {...stores>
+  <Provider {...stores}>
     <App />
   </Provider>,
   appElement
