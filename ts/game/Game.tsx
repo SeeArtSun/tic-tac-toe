@@ -23,7 +23,7 @@ class Game extends Component<IInjects, undefined> {
     const currentGame = gameStore.currentGame;
     const history = currentGame.history;
     const current = history[currentGame.stepNumber];
-    const winner  = currentGame.winner;
+    const winner  = gameStore.winner;
 
     const moves = history.map((step, move) => {
       const desc = move ?
