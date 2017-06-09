@@ -42,7 +42,7 @@ class GameStore {
 
     squares[index] = currentGame.xIsNext ? 'X' : 'O';
 
-    this.currentGame.history = history.concat([{ squares: squares }]);
+    this.currentGame.history = [...history, { squares: squares }];
     this.currentGame.stepNumber = history.length;
     this.currentGame.xIsNext = !currentGame.xIsNext;
   }
@@ -58,12 +58,15 @@ class GameStore {
   }
 
   @computed
-  public get winner(): string {
-    const { currentGame } = this;
+  public get currentStep() {
+    const { history, stepNumber } = this.currentGame;
 
-    const history = currentGame.history.slice(0, currentGame.stepNumber + 1);
-    const current = history[history.length - 1];
-    const squares = current.squares.slice();
+    return history[stepNumber];
+  }
+
+  @computed
+  public get winner(): string {
+    const squares = this.currentStep.squares.slice();
 
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i];
