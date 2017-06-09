@@ -1,61 +1,56 @@
-/*
- *  Reducer
- */
-import {ADD_SYMBOL, JUMP_TO_HISTORY} from '../actions';
+import { action, observable } from 'mobx';
 
-interface IState {
+interface IGame {
   history: { squares: string[] }[];
   stepNumber: number;
   winner: string;
   xIsNext: boolean;
 }
 
-const initialState: IState = {
-  history: [{
+class GameStore {
+  @observable public currentGame: IGame = {
+    history: [{
     squares: Array(9).fill(null),
   }],
   stepNumber: 0,
   xIsNext: true,
   winner: null,
-};
+  };
+}
 
-const reducer = (state: IState = initialState, action: any) => {
-  switch(action.type) {
-    case ADD_SYMBOL:
-      let history = state.history.slice(0, state.stepNumber + 1);
-      let current = history[history.length - 1];
-      let squares = current.squares.slice();
-      let winner = state.winner;
+@action
+public addSymbol = (index: number) => {
+  const { currentGame } = this;
 
-      // for ignore the click
-      // case1: already won the game / case2: already clicked
-      if(winner || squares[action.index]) {
-       return state;
-      }
+  let history = currentGame.history.slice(0, currentGame.stepNumber + 1);
+  let current = history[history.length - 1];
+  let squares = current.squares.slice();
+  let winner = currentGame.winner;
 
-      squares[action.index] = state.xIsNext ? 'X' : 'O';
-
-      return {
-        history: history.concat([{
-          squares: squares
-        }]),
-        stepNumber: history.length,
-        xIsNext: !state.xIsNext,
-        winner: calculateWinner(squares),
-      };
-    case JUMP_TO_HISTORY:
-      let stepNumber = action.index;
-      let xIsNext = stepNumber%2 === 0 ? true : false;
-      winner = calculateWinner(state.history[stepNumber].squares);
-      return {
-        history: state.history,
-        stepNumber: stepNumber,
-        xIsNext: xIsNext,
-        winner: winner,
-      };
-    default:
-      return state;
+  // for ignore the click
+  // case1: already won the game / case2: already clicked
+  if (winner || squares[index]) {
+    return;
   }
+
+  squares[index] = currentGame.xIsNext ? 'X' : 'O';
+
+  this.currentGame.history = history.concat([{ squares: squares }]);
+  this.currentGame.stepNumber = history.length;
+  this.currentGame.xIsNext = !state.xIsNext;
+  this.currentGame.winner = this.calculateWinner(squares);
+}
+
+@action
+public jumpToHistory = (index: number) => {
+  let stepNumber = index;
+  let xIsNext = stepNumber % 2 === 0 ? true : false;
+  winner = calculateWinner(this.currentGame.history[stepNumber].squares);
+
+  this.currentGame.history = this.currentGame.history,
+  this.currentGame.stepNumber = stepNumber
+  this.currentGame.xIsNext = xIsNext;
+  this.currentGame.winner = winner;
 }
 
 function calculateWinner(squares: string[]): string {
@@ -78,4 +73,4 @@ function calculateWinner(squares: string[]): string {
   return null;
 }
 
-export default reducer;
+export default GameStore;
