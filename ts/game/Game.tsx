@@ -1,15 +1,17 @@
+import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import Board from './Board';
+import GameStore from './GameStore';
+import { IStores } from '../index';
 
-interface IProps {
-  history: { squares: string[] }[];
-  stepNumber: number;
-  winner: string;
-  xIsNext: boolean;
-  jumpToHistory: (move: number) => void;
-  addSymbol: () => void;
+interface IInjects {
+  gameStore?: GameStore;
 }
 
+@inject((stores: IStores): IInjects => ({
+  gameStore: stores.GameStore,
+}))
+@observer
 class Game extends React.Component<IProps, undefined> {
   render() {
     const history = this.props.history;
