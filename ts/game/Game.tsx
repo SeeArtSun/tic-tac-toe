@@ -5,16 +5,6 @@ import Board from './Board';
 import GameStore from './GameStore';
 import { IStores } from '../index';
 
-
-interface IProps {
-  history: { squares: string[] }[];
-  stepNumber: number;
-  winner: string;
-  xIsNext: boolean;
-  jumpToHistory: (move: number) => void;
-  addSymbol: () => void;
-}
-
 interface IInjects {
   gameStore?: GameStore;
 }
@@ -27,11 +17,13 @@ class Game extends Component<IInjects, undefined> {
   constructor(props: any) {
     super(props);
   }
+
   render() {
     const { gameStore } = this.props;
-    const history = gameStore.currentGame.history;
-    const current = history[gameStore.currentGame.stepNumber];
-    const winner  = gameStore.currentGame.winner;
+    const currentGame = gameStore.currentGame;
+    const history = currentGame.history;
+    const current = history[currentGame.stepNumber];
+    const winner  = currentGame.winner;
 
     const moves = history.map((step, move) => {
       const desc = move ?
@@ -39,7 +31,7 @@ class Game extends Component<IInjects, undefined> {
         'Game start';
         return (
           <li key={move}>
-            <button onClick={() => gameStore.jumpToHistory(gameStore.currentGame, move)}>{desc}</button>
+            <button onClick={() => gameStore.jumpToHistory(currentGame, move)}>{desc}</button>
           </li>
         );
     });
@@ -48,7 +40,7 @@ class Game extends Component<IInjects, undefined> {
      if(winner) {
        status = 'Winner: ' + winner;
     } else {
-      status = 'Next player: ' + (gameStore.currentGame.xIsNext ? 'X' : 'O');
+      status = 'Next player: ' + (currentGame.xIsNext ? 'X' : 'O');
     }
 
     return (
@@ -56,7 +48,7 @@ class Game extends Component<IInjects, undefined> {
         <div className="game-board">
           <Board
             squares={current.squares}
-            onClick={() => gameStore.addSymbol(gameStore.currentGame, event)}
+            onClick={() => gameStore.addSymbol(currentGame, event)}
           />
         </div>
         <div className="game-info">
