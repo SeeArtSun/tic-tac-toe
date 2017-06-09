@@ -3,17 +3,25 @@
  */
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import reducer from './reducers/index';
-import App from './components/App';
+import { Provider } from 'mobx-react';
+import GameStore from './game/GameStore';
+import App from './game/App';
 
-const store = createStore(reducer);
+interface IStores {
+  gameStore: GameStore,
+}
+
+const stores: IStores = {
+  gameStore: new GameStore(),
+}
+
 const appElement = document.getElementById('app');
 
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider {...stores}>
     <App />
   </Provider>,
   appElement
 );
+
+export { IStores }
