@@ -21,7 +21,7 @@ class Game extends React.Component<IProps, undefined> {
         'Move #' + move :
         'Game start';
         return (
-          <li style={this.props.stepNumber === move ? {border: "2px solid yellow"} : null}key={move}>
+          <li className={this.props.stepNumber === move ? "highlight" : ""} key={move}>
             <button onClick={() => this.props.jumpToHistory(move)}>{desc}</button>
           </li>
         );
