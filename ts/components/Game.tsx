@@ -44,7 +44,7 @@ class Game extends React.Component<IProps, undefined> {
         </div>
         <div className="game-info">
           <div>{status}</div>
-          <ol style={{listStylePosition: "inside", margin: 0, padding: 0}}>{moves}</ol>
+          <ol className="game-info-moves">{moves}</ol>
         </div>
       </div>
     );

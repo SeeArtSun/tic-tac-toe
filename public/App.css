@@ -48,3 +48,9 @@ ol, ul {
 .game-info {
   margin-left: 20px;
 }
+
+.game-info-moves {
+  list-style-position:inside;
+  margin:0;
+  padding:0;
+}
