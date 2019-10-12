@@ -1,3 +1,5 @@
+commit 과정은 [medium post](https://engineering.huiseoul.com/react-redux-tic-tac-toe-4a773928c425)에서 볼 수 있습니다.
+
 # [React Tic-Tac-Toe Tutorial](https://facebook.github.io/react/tutorial/tutorial.html)
 - 컴포넌트 기반의 프레임워크 구조를 이해하기 좋은 예
 
